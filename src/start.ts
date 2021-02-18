@@ -1,0 +1,38 @@
+import { Sell } from './classes/Sell.js';
+import { Buy } from './classes/Buy.js';
+import { HasFormatter } from './interfaces/HasFormatter.js';
+import { ListTemplate } from './classes/ListTemplate.js';
+
+
+
+const form = document.querySelector('.new-item') as HTMLFormElement;
+//inputs
+ const type =document.querySelector('#type') as HTMLSelectElement; //inputs
+ const productName =document.querySelector('#product-name') as HTMLInputElement;
+ const price =document.querySelector('#price') as HTMLInputElement;
+ const description =document.querySelector('#description') as HTMLInputElement ;
+
+
+ const ul = document.querySelector('ul')!;
+ const list = new ListTemplate(ul);
+
+ //adding Event Listener
+ form.addEventListener('submit', (e: Event) =>{
+     e.preventDefault();
+
+     let doc: HasFormatter;
+     if(type.value === 'buy') {
+         doc = new Buy(productName.value, price.valueAsNumber, description.value)
+     }else{
+         doc = new Sell(productName.value, price.valueAsNumber, description.value)
+     }
+
+     console.log(
+         type.value,
+         productName.value,
+         price.valueAsNumber,
+         description.value
+     );
+
+     list.render(doc, type.value, 'end');
+ })
